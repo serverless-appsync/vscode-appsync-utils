@@ -1,0 +1,106 @@
+{
+  "AppSyncInit": {
+    "prefix": "appsync",
+    "body": [
+      "name: ${1:apiName}",
+      "",
+      "authenticationType: ${2|API_KEY,AWS_IAM,AMAZON_COGNITO_USER_POOLS,OPENID_CONNECT|}",
+      "",
+      "schema: ${3:schemas/*.graphql}",
+      "",
+      "logConfig:",
+      "  level: ${4|NONE,ALL,ERROR|}",
+      "",
+      "substitutions:",
+      "",
+      "mappingTemplates:",
+      "",
+      "functionConfigurations:",
+      "",
+      "dataSources:"
+    ]
+  },
+  "AppSyncCognitoConfig": {
+    "prefix": "appsyncCognito",
+    "body": [
+      "userPoolConfig:",
+      "  defaultAction: ${1|ALLOW,DENY|}",
+      "  userPoolId: !Ref ${2:CognitoUserPool}",
+      "  appIdClientRegex: !Ref ${3:CognitoUserPoolClient}"
+    ]
+  },
+  "AppSyncOIDCConfig": {
+    "prefix": "appsyncOIDC",
+    "body": [
+      "openIdConnectConfig:",
+      " issuer: ${1}",
+      " clientId: ${2}",
+      " iatTTL: ${3}",
+      " authTTL: ${4}"
+    ]
+  },
+  "AppSyncUnitResolver": {
+    "prefix": "unitResolver",
+    "body": [
+      "- kind: UNIT",
+      "  dataSource: ${1:sourceName}",
+      "  type: ${2|Query,Mutation|}",
+      "  field: ${3:fieldName}",
+      "  ${4:request: ${5:${2}.${3}.request.vtl}}",
+      "  ${6:response: ${7:${2}.${3}.response.vtl}}"
+    ]
+  },
+  "AppSyncPipelineResolver": {
+    "prefix": "pipelineResolver",
+    "body": [
+      "- kind: PIPELINE",
+      "  type: ${1|Query,Mutation|}",
+      "  field: ${2:fieldName}",
+      "  ${4:request: ${5:${1}.${2}.request.vtl}}",
+      "  ${6:response: ${7:${1}.${2}.response.vtl}}",
+      "  functions:",
+      "    - ${10:function1}",
+      "    - ${11:function2}"
+    ]
+  },
+  "AppSyncPipelineFunctionConfig": {
+    "prefix": "functionConfig",
+    "body": [
+      "- dataSource: ${1:sourceName}",
+      "  name: ${2:functionName}",
+      "  ${3:request: ${4:${2}.request.vtl}}",
+      "  ${6:response: ${6:${2}.response.vtl}}"
+    ]
+  },
+  "AppSyncAwsLambdaDataSource": {
+    "prefix": "lambdaDataSource",
+    "body": [
+      "- type: AWS_LAMBDA",
+      "  name: ${1:name}",
+      "  config:",
+      "    functionName: ${2:${1}}"
+    ]
+  },
+  "AppSyncNoneDataSource": {
+    "prefix": "noneDataSource",
+    "body": ["- type: NONE", "  name: ${1:name}"]
+  },
+  "AppSyncDynamoDbDataSource": {
+    "prefix": "dynamoDbDataSource",
+    "body": [
+      "- type: AMAZON_DYNAMODB",
+      "  name: ${1:name}",
+      "  config:",
+      "    tableName: !Ref: ${2:MyTable}"
+    ]
+  },
+  "AppSyncHttpDataSource": {
+    "prefix": "httpDataSource",
+    "body": [
+      "- type: HTTP",
+      "  name: ${1:name}",
+      "  config:",
+      "    endpoint: https://${2}"
+    ]
+  }
+}

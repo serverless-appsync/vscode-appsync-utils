@@ -1,0 +1,51 @@
+{
+  "name": "vscode-appsync-utils",
+  "publisher": "bboure",
+  "displayName": "AppSync Utils",
+  "description": "A collection of snippets for AppSync devs",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.56.0"
+  },
+  "keywords": [
+    "AppSync",
+    "GraphQL",
+    "Velocity",
+    "Serverless Framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bboure/vscode-appsync-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/bboure/vscode-appsync-utils/issues",
+    "email": "benoit.boure@gmail.com"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "velocity",
+        "extensions": [
+          ".vtl"
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "velocity",
+        "path": "./snippets/dynamodb.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./snippets/sls-appsync-plugin.json"
+      },
+      {
+        "language": "graphql",
+        "path": "./snippets/graphql.json"
+      }
+    ]
+  }
+}

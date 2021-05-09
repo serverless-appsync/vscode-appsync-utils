@@ -1,0 +1,121 @@
+{
+	"GetItemRequest": {
+		"prefix": "GetItemRequest",
+		"body": [
+			"{",
+			"    \"version\": \"2017-02-28\",",
+    	"    \"operation\": \"GetItem\",",
+    	"    \"key\": {",
+    	"      \"PK\": \\$util.dynamodb.toDynamoDBJson(\"${1}#${2:\\${ctx.args.id\\}}\"),",
+    	"      \"SK\": \\$util.dynamodb.toDynamoDBJson(\"${3:${1}}#${4:${2}}\")",
+    	"    }",
+			"}"
+		]
+	},
+	"QueryRequest": {
+		"prefix": "QueryRequest",
+		"body": [
+			"{",
+			"  \"version\": \"2017-02-28\",",
+			"  \"operation\": \"Query\",",
+  	  "  ${100:\"index\": \"${1}\",}",
+  	  "  \"limit\": \\$util.toJson(\\$ctx.args.limit),",
+  	  "  \"scanIndexForward\": ${20:true},",
+  	  "  \"query\": {",
+  	  "    \"expression\": \"#PK = :PK and begins_with(#SK, :SK)\"",
+  	  "    \"expressionNames\": {",
+  	  "      \"#PK\": \"${1}PK\"",
+  	  "      \"#SK\": \"${1}PK\"",
+  	  "    },",
+  	  "    \"expressionValues\": {",
+  	  "      \":PK\": \\$util.dynamodb.toStringJson(\"${2}#${3}\"),",
+  	  "      \":SK\": \\$util.dynamodb.toStringJson(\"${4}#${5}\")",
+  	  "    }",
+  	  "  }",
+			"}"
+		]
+	},
+	"ResultResponse": {
+		"prefix": "QueryResponse",
+		"body": [
+			"\\$util.toJson(\\$ctx.result)"
+		]
+	},
+	"GetItemSingleTableRequest": {
+		"prefix": "GetItemSingleTableRequest",
+		"body": [
+			"#set(\\$expression=\"#PK = :PK\")",
+			"#set(\\$expressionNames={\"#PK\": \"${1}PK\"})",
+			"#set(\\$expressionValues={\":PK\": \\$util.dynamodb.toDynamoDB(\"${2}#\\${${3:context.args.id}\\}\")})",
+			"#if(!\\$ctx.info.selectionSetList.contains(\"${6}\"))",
+			"  #set(\\$expression=\\$expression + \" and #SK = :SK\")",
+			"  \\$util.qr(\\$expressionNames.put(\"#SK\", \"${1}SK\"))",
+			"  \\$util.qr(\\$expressionValues.put(\":SK\", \\$util.dynamodb.toDynamoDB(\"${4:${2}}#${5:\\${${3}\\}}\")))",
+			"#end",
+			"{",
+			"    \"version\": \"2017-02-28\",",
+			"    \"operation\": \"Query\",",
+			"    ${100:\"index\": \"${1}\",}",
+			"    \"query\": {",
+			"      \"expression\": \"\\$expression\",",
+			"      \"expressionNames\": \\$util.toJson(\\$expressionNames),",
+			"      \"expressionValues\": \\$util.toJson(\\$expressionValues)",
+			"    }",
+			"}"
+		]
+	},
+	"GetItemSingleTableResponse": {
+		"prefix": "GetItemSingleTableResponse",
+		"body": [
+      "#foreach(\\$item in \\$context.result.items)",
+      "  #if(\\$item.get(\"${10:type}\") == \"${1:parentType}\")",
+      "    #set (\\$result=\\$item)",
+      "    \\$util.qr(\\$result.put(\"${3:children}\", []))",
+      "  #elseif(\\$item.get(\"${10:type}\") == \"${2:childType}\")",
+      "    \\$util.qr(\\$result.${3:orders}.add(\\$item))",
+      "  #end",
+      "#end",
+      "#if(\\$result.size() > 0)",
+      "  \\$util.toJson($result)",
+      "#else",
+      "  null",
+      "#end"
+		]
+	},
+	"DeleteItemRequest": {
+		"prefix": "DeleteItemRequest",
+		"body": [
+			"{",
+			"  \"version\": \"2017-02-28\",",
+			"  \"operation\": \"DeleteItem\",",
+			"  \"key\": {",
+			"    \"PK\": \\$util.dynamodb.toStringJson(\"${1}#${2:\\${ctx.args.id\\}}\"),",
+			"    \"SK\": \\$util.dynamodb.toStringJson(\"${3:${1}}#${4:${2}}\")",
+			"  },",
+			"  \"condition\": {",
+			"    \"expression\": \"#ownerId = :ownerId\",",
+			"    \"expressionNames\": {",
+			"      \"#ownerId\": \"${5:ownerId}\"",
+			"    },",
+			"    \"expressionValues\": {",
+			"      \":ownerId\": \\$util.dynamodb.toDynamoDBJson(\\$ctx.identity.sub)",
+			"    }",
+			"  }",
+			"}"
+		]
+	},
+	"DeleteItemResponse": {
+		"prefix": "DeleteItemResponse",
+		"body": [
+		  "#if(\\$ctx.error)",
+		  "  #if(\\$ctx.error.code == \"ConditionalCheckFailedException\")",
+		  "    \\$util.unauthorized()",
+		  "  #else",
+		  "    \\$util.error(\"Internal Error\", \"InternalError\")",
+		  "  #end",
+		  "#else",
+		  "  true",
+		  "#end"
+		]
+	}
+}

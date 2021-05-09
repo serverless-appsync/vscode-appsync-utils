@@ -1,0 +1,31 @@
+{
+  "items": {
+    "prefix": "items",
+    "body": "get${1}(limit: Int, nextToken: String): ${1/(.*)/${1:/capitalize}/}Result!"
+  },
+  "get": {
+    "prefix": "get",
+    "body": "get${1}(id: ID!): ${1/(.*)/${1:/capitalize}/}"
+  },
+  "create": {
+    "prefix": "create",
+    "body": "create${1/(.*)/${1:/capitalize}/}(${1}: ID!): ${1/(.*)/${1:/capitalize}/}!"
+  },
+  "update": {
+    "prefix": "update",
+    "body": "update${1/(.*)/${1:/capitalize}/}(id: ID!): ${1/(.*)/${1:/capitalize}/}!"
+  },
+  "delete": {
+    "prefix": "delete",
+    "body": "delete${1/(.*)/${1:/capitalize}/}(id: ID!): ${2:Boolean!}"
+  },
+  "itemsResult": {
+    "prefix": "dynamoDBitemsResult",
+    "body": [
+      "type ${1}Result {",
+      "  items: [${1}!]!",
+      "  nextToken: String",
+      "}"
+    ]
+  }
+}
