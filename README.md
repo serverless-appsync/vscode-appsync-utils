@@ -8,11 +8,14 @@
 | -------------------------- | ------------------------------------------------------------------- |
 | GetItemRequest             | GetItem request template                                            |
 | QueryRequest               | Query request template                                              |
-| QueryResponse              | Query response template                                             |
+| PutItemRequest             | PutItem request template                                            |
+| UpdateItemRequest          | UpdateItem request template                                         |
+| DeleteItemRequest          | DeleteItem request template                                         |
+| TransactWriteItems         | TransactWriteItems query template                                   |
+| Response                   | A basic response template `$util.toJson($ctx.result)`               |
+| ConditionalCheckResponse   | Response template with conditional check                            |
 | GetItemSingleTableRequest  | Get item + children items request template for signle-table design  |
 | GetItemSingleTableResponse | Get item + children items response template for signle-table design |
-| DeleteItemRequest          | DeleteItem request template                                         |
-| DeleteItemResponse         | DeleteItem response template                                        |
 
 ## YAML
 
@@ -40,6 +43,12 @@ Snippets for the configuring the [Serverless Framework AppSync plugin](https://g
 | create              | Item create query            |
 | update              | Item update query            |
 | dynamoDBitemsResult | DynamoDB items response type |
+
+## TypeScript
+
+| prefix         | description                             |
+| -------------- | --------------------------------------- |
+| lambdaResolver | Creates a typed lambda resolver handler |
 
 # Contributing
 

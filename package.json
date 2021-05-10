@@ -4,6 +4,7 @@
   "displayName": "AppSync Utils",
   "description": "A collection of snippets for AppSync devs",
   "version": "0.0.1",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.56.0"
   },
@@ -45,6 +46,10 @@
       {
         "language": "graphql",
         "path": "./snippets/graphql.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/typescript.json"
       }
     ]
   }

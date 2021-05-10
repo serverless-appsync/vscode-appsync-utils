@@ -1,0 +1,15 @@
+{
+  "lambdaResolver": {
+    "prefix": "lambdaResolver",
+    "body": [
+      "import { AppSyncResolverHandler } from 'aws-lambda';",
+      "",
+      "export const handler: AppSyncResolverHandler<",
+      "  ${1:Args},",
+      "  ${2:Output},",
+      "> = async (${3:event${4:, context}}) => {",
+      "  ${0}",
+      "};"
+    ]
+  }
+}
