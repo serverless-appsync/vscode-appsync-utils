@@ -14,6 +14,7 @@
 | TransactWriteItems         | TransactWriteItems query template                                   |
 | Response                   | A basic response template `$util.toJson($ctx.result)`               |
 | ConditionalCheckResponse   | Response template with conditional check                            |
+| TransactionResponse        | Response template with transaction cancelled check                  |
 | GetItemSingleTableRequest  | Get item + children items request template for signle-table design  |
 | GetItemSingleTableResponse | Get item + children items response template for signle-table design |
 
