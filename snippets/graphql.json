@@ -22,7 +22,7 @@
   "itemsResult": {
     "prefix": "dynamoDBitemsResult",
     "body": [
-      "type ${1}Result {",
+      "type ${1}sResult {",
       "  items: [${1}!]!",
       "  nextToken: String",
       "}"

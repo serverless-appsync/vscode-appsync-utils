@@ -91,7 +91,7 @@
       "- type: AMAZON_DYNAMODB",
       "  name: ${1:name}",
       "  config:",
-      "    tableName: !Ref: ${2:MyTable}"
+      "    tableName: !Ref ${2:MyTable}"
     ]
   },
   "AppSyncHttpDataSource": {
