@@ -242,9 +242,8 @@
       "  \"tables\": {",
       "    \"${1:table}\": [",
       "      {",
-      "        \"PK\": \\$util.dynamodb.toDynamoDBJson(\"${10}\"),",
-      "        \"SK\": \\$util.dynamodb.toDynamoDBJson(\"${11:${10}}\")",
-      "      }${0}",
+      "        ${0}",
+      "      }",
       "    ]",
       "  }",
       "}"
