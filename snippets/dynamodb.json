@@ -210,5 +210,63 @@
       "  ]",
       "}"
     ]
+  },
+  "BatchGetItem": {
+    "prefix": "BatchGetItem",
+    "body": [
+      "#set(\\$keys=[])",
+      "#foreach(\\$item in ${1:\\${ctx.args.ids\\}})",
+      "  \\$util.qr(\\$keys.add({",
+      "    \"PK\": \\$util.dynamodb.toDynamoDBJson(\"${10}\"),",
+      "    \"SK\": \\$util.dynamodb.toDynamoDBJson(\"${11:${10}}\")",
+      "  }))",
+      "#end",
+      "{",
+      "  \"version\": \"2018-05-29\",",
+      "  \"operation\": \"BatchGetItem\",",
+      "  \"tables\": {",
+      "    \"${20}\": {",
+      "      \"keys\": \\$util.toJson(\\$keys)",
+      "    }${0}",
+      "  }",
+      "}"
+    ],
+    "description": "GetBatchItem"
+  },
+  "BatchPutItem": {
+    "prefix": "BatchPutItem",
+    "body": [
+      "{",
+      "  \"version\": \"2018-05-29\",",
+      "  \"operation\": \"BatchPutItem\",",
+      "  \"tables\": {",
+      "    \"${1:table}\": [",
+      "      {",
+      "        \"PK\": \\$util.dynamodb.toDynamoDBJson(\"${10}\"),",
+      "        \"SK\": \\$util.dynamodb.toDynamoDBJson(\"${11:${10}}\")",
+      "      }${0}",
+      "    ]",
+      "  }",
+      "}"
+    ],
+    "description": "BatchPutItem"
+  },
+  "BatchDeleteItem": {
+    "prefix": "BatchDeleteItem",
+    "body": [
+      "{",
+      "  \"version\": \"2018-05-29\",",
+      "  \"operation\": \"BatchDeleteItem\",",
+      "  \"tables\": {",
+      "    \"${1:table}\": [",
+      "      {",
+      "        \"PK\": \\$util.dynamodb.toDynamoDBJson(\"${10}\"),",
+      "        \"SK\": \\$util.dynamodb.toDynamoDBJson(\"${11:${10}}\")",
+      "      }${0}",
+      "    ]",
+      "  }",
+      "}"
+    ],
+    "description": "BatchDeleteItem"
   }
 }
