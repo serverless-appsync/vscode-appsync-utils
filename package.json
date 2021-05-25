@@ -3,7 +3,7 @@
   "publisher": "bboure",
   "displayName": "AppSync Utils",
   "description": "A collection of snippets for AppSync devs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "icon": "icon.png",
   "engines": {
     "vscode": "^1.56.0"
