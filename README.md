@@ -1,3 +1,5 @@
+[Download on the marketplace](https://marketplace.visualstudio.com/items?itemName=bboure.vscode-appsync-utils)
+
 # Snippets
 
 ## VTL
